@@ -2,6 +2,8 @@
   <img align="middle" src="./docs/logo.png" alt="OpenChem" width="400px" class="center">
  </p>
 
+# TODO
+a smiles, property file is required.
 # OpenChem
 
 OpenChem is a deep learning toolkit for Computational Chemistry with [PyTorch](https://pytorch.org) backend. The goal of OpenChem is to make Deep Learning models an easy-to-use tool for Computational Chemistry and Drug Design Researchers. 
