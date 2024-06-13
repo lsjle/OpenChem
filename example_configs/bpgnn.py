@@ -47,8 +47,8 @@ node_attributes['atom_element'] = Attribute('node', 'atom_element',
                                             one_hot=True,
                                             values=list(range(11)))
 
-data = read_smiles_property_file('/home/impartialjust/ai/project/ongoing/mppredict/dataset/allbpwithsmilescleannoheavy.csv',
-                                 cols_to_read=[1, 3],
+data = read_smiles_property_file('../../dataset/allbpwithsmilescleannoheavymolwtlimit.csv',
+                                 cols_to_read=[1, 2],
                                  keep_header=False)
 
 smiles = data[1]
@@ -58,27 +58,29 @@ labels = labels.T
 X_train, X_test, y_train, y_test = train_test_split(smiles, labels, test_size=0.2,
                                                     random_state=928)
 
-save_smiles_property_file('/home/impartialjust/ai/project/ongoing/mppredict/dataset/tmp/train.smi', X_train, y_train)
-save_smiles_property_file('/home/impartialjust/ai/project/ongoing/mppredict/dataset/tmp/test.smi', X_test, y_test)
+save_smiles_property_file('../../dataset/tmp/train.smi', X_train, y_train)
+save_smiles_property_file('../../dataset/tmp/test.smi', X_test, y_test)
 
 train_dataset = GraphDataset(get_atomic_attributes, node_attributes,
-                             '/home/impartialjust/ai/project/ongoing/mppredict/dataset/tmp/train.smi',
-                             delimiter=',', cols_to_read=[0, 1])
+                             '../../dataset/tmp/train.smi',
+                             delimiter=',', cols_to_read=[1, 0])
 test_dataset = GraphDataset(get_atomic_attributes, node_attributes,
-                             '/home/impartialjust/ai/project/ongoing/mppredict/dataset/tmp/test.smi',
-                             delimiter=',', cols_to_read=[0, 1])
+                             '../../dataset/tmp/test.smi',
+                             delimiter=',', cols_to_read=[1, 0])
 predict_dataset = GraphDataset(get_atomic_attributes, node_attributes,
-                             '/home/impartialjust/ai/project/ongoing/mppredict/dataset/tmp/test.smi',
-                             delimiter=',', cols_to_read=[0],return_smiles=True)
+                             '../../dataset/tmp/test.smi',
+                             delimiter=',', cols_to_read=[1],return_smiles=True)
 
 model = Graph2Label
+
+# best performance 0.1642 900 eps
 
 model_params = {
     'task': 'regression',
     'random_seed': 928,
     'batch_size': 512,
     'num_epochs': 101,
-    'logdir': 'logs/bpgraph',
+    'logdir': 'logs/bpgraphcpu',
     'print_every': 20,
     'save_every': 5,
     'train_data_layer': train_dataset,
