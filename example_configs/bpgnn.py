@@ -47,8 +47,8 @@ node_attributes['atom_element'] = Attribute('node', 'atom_element',
                                             one_hot=True,
                                             values=list(range(11)))
 
-data = read_smiles_property_file('../../dataset/allbpwithsmilescleannoheavymolwtlimit.csv',
-                                 cols_to_read=[1, 2],
+data = read_smiles_property_file('/home/ntnu_stu/161205/ai-sync/project/ongoing/mppredict/chedl/bpsmiles.csv',
+                                 cols_to_read=[2, 1],
                                  keep_header=False)
 
 smiles = data[1]
@@ -80,7 +80,7 @@ model_params = {
     'random_seed': 928,
     'batch_size': 512,
     'num_epochs': 101,
-    'logdir': 'logs/bpgraphcpu',
+    'logdir': 'logs/bpyaws',
     'print_every': 20,
     'save_every': 5,
     'train_data_layer': train_dataset,
